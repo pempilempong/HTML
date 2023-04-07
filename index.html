@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta brand="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="styles.css">
+        <title>BASKETBALL SHOES</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2 class="text-center">BASKETBALL SHOES</h2>
+            <hr>
+    
+            <div id="demo"></div>
+        
+            <script>
+                var txt = "";
+                const xmlhttp = new XMLHttpRequest();
+                xmlhttp.onload = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        let shoes = JSON.parse(this.responseText);
+                        console.log(shoes);
+                        let txt = "";
+                        let user = "";
+            
+                        for(i = 0; i < shoes.length;i++){
+                            txt += `
+                                <div class="card mb-3">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-4">
+                                            <img class="card-img" src="pics/img/${shoes[i].img}" alt="">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${shoes[i].brand}</h5>
+                                                <p class="card-text"><b>Model: </b>${shoes[i].model}</p>
+                                                <p class="card-text"><b>Colorway: </b>${shoes[i].colorway}</p>
+                                                <p class="card-text"><b>Size: </b>${shoes[i].size}</p>
+                                                <p class="card-text"><b>Sizes: </b></p>
+                                                <ul class="list-unstyled">
+                                                    
+                                    `;
+                            for(j = 0; j < shoes[i].sizes.length; j++){
+                                txt += `
+                                    <li><b>*</b> ${shoes[i].sizes[j]}</li>
+                                `;
+                            }
+                            txt += `
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        document.getElementById("demo").innerHTML = txt;
+                    }
+                }
+                xmlhttp.open("GET", "http://localhost/actJSON/shoes.php");
+                xmlhttp.send();
+            </script>
+    
+        </div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    </body>
+    </html>
